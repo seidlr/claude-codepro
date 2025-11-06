@@ -1,15 +1,20 @@
 ---
-description: Use when creating or planning anything - starts with discovery and clarification like design phase, then creates comprehensive implementation plan with exact file paths, complete code examples, and verification steps
+description: Use when creating or planning anything - starts with discovery and clarification like design phase, then creates focused implementation plan with exact file paths, clear objectives, and verification steps (max 10-12 tasks)
 model: opus
 ---
 
-# Creating Comprehensive Implementation Plans
+# Creating Focused Implementation Plans
 
 ## Overview
 
-Transform ideas into fully-formed implementation plans through structured discovery, questioning, and detailed task breakdown. This combines design exploration with concrete implementation planning.
+Transform ideas into actionable implementation plans through structured discovery, questioning, and focused task breakdown. This combines design exploration with concrete but concise implementation planning.
 
-**Core principle:** Understand deeply, explore alternatives, plan comprehensively with zero-context assumptions.
+**Core principles:**
+- Understand deeply, explore alternatives, plan focused and actionable
+- **Zero-context assumption:** Assume implementer knows nothing about the codebase or domain
+- Write plans that are self-contained and executable by a skilled developer with no prior context
+
+**CRITICAL CONSTRAINT:** Plans MUST have 10-12 tasks maximum. If a feature needs more, split into multiple specifications.
 
 **Workflow Position:** Step 1 of 3 in spec-driven development
 - **This command (/plan):** Idea → Design → Implementation Plan
@@ -180,6 +185,11 @@ Options: ["Session storage" (secure), "Local storage" (persistent), "Cookies" (S
 
 ### Phase 4: Implementation Planning
 
+**CRITICAL: Task Count Limit**
+- **Maximum: 10-12 tasks per plan**
+- If initial breakdown exceeds 12 tasks, STOP and ask user to split into multiple features
+- Example: "This feature requires 18 tasks. Should we split into: (A) Core CRUD + DB (8 tasks) and (B) Frontend + CDK (10 tasks)?"
+
 **Required Plan Header:**
 ```markdown
 # [Feature Name] Implementation Plan
@@ -188,48 +198,106 @@ Options: ["Session storage" (secure), "Local storage" (persistent), "Cookies" (S
 > If context limits reached: `/remember` → `/clear` → `/implement` again
 
 **Goal:** [One sentence describing what this builds]
+
 **Architecture:** [2-3 sentences about approach]
+
 **Tech Stack:** [Key technologies/libraries]
+
+**Context for Implementer:**
+- [Key codebase convention or pattern]
+- [Domain knowledge needed]
+- [Integration points or dependencies]
 
 ## Progress Tracking
 - [ ] Task 1: [Brief summary]
 - [ ] Task 2: [Brief summary]
 - [ ] Task N: [Brief summary]
 
-**Total Tasks:** [Number]
+**Total Tasks:** [Number] (Max: 12)
 ```
 
 **For Extending Plans:**
 1. Preserve original header/architecture
 2. Mark new tasks with `[NEW]` prefix
-3. Update total count: `Total Tasks: X (Originally: Y)`
-4. Add extension history: `> Extended [Date]: Tasks X-Y for [feature]`
-5. Insert tasks in logical order (after related, before dependent)
+3. Check total: If original + new > 12 tasks, suggest splitting
+4. Update total count: `Total Tasks: X (Originally: Y)`
+5. Add extension history: `> Extended [Date]: Tasks X-Y for [feature]`
+6. Insert tasks in logical order (after related, before dependent)
 
 ## Task Structure
+
+**Keep tasks focused but complete. Include code examples ONLY for critical/complex patterns.**
 
 ```markdown
 ### Task N: [Component Name]
 
+**Objective:** [1-2 sentences describing what to build]
+
 **Files:**
 - Create: `exact/path/to/file.py`
-- Modify: `exact/path/to/existing.py:123-145`
+- Modify: `exact/path/to/existing.py`
 - Test: `tests/exact/path/to/test.py`
 
-**TDD Steps (MANDATORY):**
-1. Write failing test with expected behavior
-2. Run: `uv run pytest tests/path/test.py::test_name -v` → FAIL
-3. Write minimal implementation to pass
-4. Run test again → PASS
-5. **Execute actual code:** Run the program/function and verify output
-6. (IF API) Create Postman collection and run with Newman
+**Implementation Steps:**
 
-**Execution Verification:**
-- Include exact command to run actual code: `uv run python src/main.py` or similar
-- Show expected output/behavior (not just "should work")
-- Verify logs, files created, database records, or API responses
+1. **Write failing test** - Define expected behavior
+   - Test command: `uv run pytest tests/path/test.py::test_name -v`
+   - Expected: Test FAILS (function/class not defined)
 
-**Include:** Complete code (no placeholders), exact commands, expected outputs
+2. **Implement minimal code** - Make test pass
+   - Key pattern: [Brief description of approach]
+   - Critical logic: [Include code example ONLY if complex/non-obvious]
+
+3. **Verify implementation** - Confirm test passes
+   - Test command: `uv run pytest tests/path/test.py::test_name -v`
+   - Expected: Test PASSES
+
+4. **Execute actual code** - Run program to verify behavior
+   - Run command: `uv run python src/main.py` (if applicable)
+   - Expected: [Specific output/behavior]
+   - (IF API) Create Postman collection and run with Newman
+
+**Skills:** @skill-name @another-skill
+
+**Code Example (if complex):**
+```python
+# Include ONLY if pattern is complex or non-obvious
+def critical_function():
+    # Key implementation detail
+    pass
+```
+```
+
+**Example Task:**
+```markdown
+### Task 3: Data Access Layer
+
+**Objective:** Create repository pattern for database operations with proper error handling.
+
+**Files:**
+- Create: `src/repositories/entity_repository.py`
+- Test: `tests/repositories/test_entity_repository.py`
+
+**Implementation Steps:**
+
+1. **Write failing test** - Define expected repository behavior
+   - Test command: `uv run pytest tests/repositories/test_entity_repository.py::test_get_by_id -v`
+   - Expected: Test FAILS (EntityRepository not defined)
+
+2. **Implement minimal code** - Create repository with CRUD methods
+   - Key pattern: Repository pattern with parameterized queries
+   - Critical logic: Use connection pooling, handle None cases
+
+3. **Verify implementation** - Confirm test passes
+   - Test command: `uv run pytest tests/repositories/test_entity_repository.py::test_get_by_id -v`
+   - Expected: Test PASSES
+
+4. **Execute actual code** - Verify database operations work
+   - Run command: `uv run python -m src.repositories.entity_repository`
+   - Expected: Successful connection, CRUD operations complete
+
+**Skills:** @backend-queries @backend-models @testing-test-driven-development
+```
 
 ## Skills to Reference in Tasks
 
@@ -237,29 +305,33 @@ Options: ["Session storage" (secure), "Local storage" (persistent), "Cookies" (S
 
 **Context-specific:**
 `@backend-api` (endpoints), `@backend-models` (database), `@backend-queries` (SQL),
-`@global-error-handling`, `@global-validation`, `@testing-final-verification` (last task)
+`@backend-migrations` (schema changes), `@global-error-handling`, `@global-validation`,
+`@frontend-components` (UI), `@frontend-css` (styling), `@testing-final-verification` (last task)
 
 ## Coding Standards
 
-✅ **TDD Mandatory** - Test first, fail, implement, pass
+✅ **Zero-context clarity** - Assume implementer knows nothing about codebase or domain
+✅ **TDD Mandatory** - Test first (fail), implement, verify (pass), execute actual code
 ✅ **DRY/YAGNI** - No repetition or speculative features
 ✅ **Exact paths** - Complete file paths, no ambiguity
-✅ **Complete code** - No placeholders like "add validation here"
-✅ **Exact commands** - With expected output
-✅ **Clean code** - One-line docstrings, no inline comments, imports at top
+✅ **Bite-sized steps** - Break each task into 4 clear steps (test, implement, verify, execute)
+✅ **Selective code examples** - Include code ONLY for complex/non-obvious patterns
+✅ **Focused scope** - 10-12 tasks maximum, split if larger
 
 ### Phase 5: Plan Documentation
 
 **New Plans:** Save to `docs/plans/YYYY-MM-DD-<feature-name>.md` with:
 - Complete header with context management
-- All tasks with exact code (no placeholders)
+- All tasks following concise structure (10-12 max)
 - Referenced skills using @ syntax
+- Clear file paths and objectives
 
 **Extended Plans:** Update existing file with:
 - Preserved completed work [x] checkboxes
 - New tasks marked with `[NEW]`
 - Extension metadata: `> Extended [Date]: Tasks X-Y for [feature]`
 - Updated counts and Cipher storage of decisions
+- Check: Total tasks must not exceed 12 (suggest split if needed)
 
 ### Phase 6: Implementation Handoff
 
@@ -311,7 +383,10 @@ Go backward when: New constraints revealed, validation gaps found, approach ques
 | **Structured choices**   | AskUserQuestion for 2-4 options          |
 | **YAGNI/DRY**            | No speculation or repetition             |
 | **Explore alternatives** | Always 2-3 approaches                    |
-| **Complete code**        | No placeholders ever                     |
+| **Task limit**           | Maximum 10-12 tasks (split if more)      |
+| **Zero-context**         | Assume implementer knows nothing         |
+| **Bite-sized steps**     | 4-step flow: test, implement, verify, execute |
+| **Selective code**       | Examples only for complex patterns       |
 | **Fresh context**        | Start with /clear                        |
 
 **For Extensions:** Preserve history, mark [NEW], group logically, update metadata, store in Cipher
@@ -320,7 +395,22 @@ Go backward when: New constraints revealed, validation gaps found, approach ques
 
 **All plans:** Research → Question → Explore → Validate → Task → Document → Handoff
 
-**New:** Save to `docs/plans/YYYY-MM-DD-<feature>.md`
-**Extend:** Update existing file, preserve completed work, mark additions [NEW]
+**New:** Save to `docs/plans/YYYY-MM-DD-<feature>.md` (10-12 tasks max)
+**Extend:** Update existing file, preserve completed work, mark additions [NEW], check task count
 
-Always include: Exact paths, complete code, test commands, @ skills, E2E tests for APIs
+**Always include:**
+- Exact file paths for all creates/modifies/tests
+- 4-step implementation flow (test fail, implement, test pass, execute)
+- Clear expected outputs for each verification step
+- Code examples ONLY for complex/non-obvious patterns
+- @ skill references for automatic enforcement
+- E2E tests (Postman/Newman) for APIs
+
+**Task count enforcement:**
+- If breakdown > 12 tasks: STOP and suggest splitting
+- Example split: "Backend Core (8 tasks) + Frontend (10 tasks)" rather than "Full Stack (18 tasks)"
+
+**Zero-context principle:**
+- Write as if implementer has never seen the codebase
+- Include all context needed to understand the task
+- Reference documentation if domain knowledge required
