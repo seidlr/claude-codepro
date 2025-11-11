@@ -157,6 +157,8 @@ Contributions welcome: custom skills, MCP integrations, workflow improvements, b
 - **[postmanlabs/newman](https://github.com/postmanlabs/newman)** - End-to-End API testing
 - **[pytest-dev/pytest](https://github.com/pytest-dev/pytest)** - Python testing framework
 - **[qltysh/qlty](https://github.com/qltysh/qlty)** - Code quality automation
+- **[obra/superpowers](https://github.com/obra/superpowers)** - CC Skills inspiration
+- **[buildermethods/agent-os](https://github.com/buildermethods/agent-os)** - CC Spec-Driven inspiration
 - **[campfirein/cipher](https://github.com/campfirein/cipher)** - CC Cross-session memory
 - **[zilliztech/claude-context](https://github.com/zilliztech/claude-context)** - CC Semantic code search
 - **[hagan/claudia-statusline](https://github.com/hagan/claudia-statusline)** - CC Status line integration
