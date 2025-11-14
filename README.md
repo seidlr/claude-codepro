@@ -4,7 +4,7 @@
 
 ### A Professional System for Building Quality Code
 
-Stop vibe coding, start shipping systematically with Spec-Driven Development, TDD, and automated workflows with Claude Code (CC)
+Start shipping systematically with Spec-Driven Development, TDD, and automated workflows with Claude Code
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-Optimized-blue)](https://claude.ai)
@@ -45,7 +45,7 @@ Stop vibe coding, start shipping systematically with Spec-Driven Development, TD
 ### 💡 Modular Rules System with Auto-Generated Commands & Skills
 - **Rules Builder** - Automatically assembles commands and skills from markdown rules on every `cc` startup
 - **Core Rules** - Coding standards, TDD enforcement, error handling, validation, context management
-- **Extended Rules** - Domain-specific rules auto-converted to skills (@backend-api, @frontend-components, etc.)
+- **Extended Rules** - Domain-specific rules auto-converted to skills, f. ex. @frontend-components
 - **Workflow Rules** - Command-specific behavior for /plan, /implement, /verify, /quick, /remember
 - **Flexible Customization** - Edit `.claude/rules/config.yaml` to adjust which rules apply to which commands
 
@@ -169,13 +169,13 @@ The system uses a modular rules-based architecture that automatically generates 
 
 If you want to dive deeper into the setup and advanced usage of Claude CodePro, check out the upcoming  academy that starts with 10 comprehensive modules where we do a deep-dive into all important topics:
 
-### ➡️ [www.claude-code.pro](https://www.claude-code.pro)
+➡️ **[www.claude-code.pro](https://www.claude-code.pro)**
 
 ---
 
 ## 🤝 Contributing
 
-Contributions welcome: custom skills, MCP integrations, workflow improvements, bug reports.
+Contributions welcome: custom skills, MCP integrations, workflow improvements, bug reports, etc.
 
 ---
 
